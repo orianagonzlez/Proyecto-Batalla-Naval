@@ -5,5 +5,5 @@
 - Desarrollar el tablero y configurar los disparos.
 - Desarrollar las funciones de estadísticas, no importan que ni siquiera tengan el juego listo.
 '''
-
+#Funcion principal
 

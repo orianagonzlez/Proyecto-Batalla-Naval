@@ -1,4 +1,4 @@
-usuarios_registrados = {"origon":{"nombre":"oriana", "edad":18, "genero":"F"}}   #En el futuro sera el archivo de texto
+usuarios_registrados = {"origon":{"nombre":"oriana", "edad":18, "genero":"F"}}   #En el futuro sera el archivo de texto txt
 
 def validar_entero_positivo(n):
     es_entero = False
@@ -14,7 +14,7 @@ def pedir_entero_positivo_validado(mensaje):
     n = input(mensaje)
     while not validar_entero_positivo(n):
         n = input(mensaje)
-    return n
+    return int(n)
 
 def tiene_espacios(s):
     hay_espacios = False
