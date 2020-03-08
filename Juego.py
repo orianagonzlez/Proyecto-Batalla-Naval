@@ -88,15 +88,18 @@ def posicionar_barcos(barco, lista_de_coord, tablero, posiciones):
 
 
 def imprimir_tablero(tablero):
-                print("", end="\t")
-                for j in range(1,11):
-                    print(j, end="    ")
+    '''
+    Funcion para imprimir el tablero de juego de forma decente.
+    '''
+    print("", end="\t")
+    for j in range(1,11):
+        print(j, end="    ")
 
-                for i, fila in enumerate(tablero, 1):
-                    print("\n")
-                    print(i, end="\t")
-                    for columna in fila:
-                        print(columna, end="    ")
+    for i, fila in enumerate(tablero, 1):
+        print("\n")
+        print(i, end="\t")
+        for columna in fila:
+            print(columna, end="    ")
 
 def actualizar_puntaje(username, puntaje):
     '''

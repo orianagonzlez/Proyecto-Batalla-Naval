@@ -1,6 +1,9 @@
 #Funciones usadas en varios archivos
 
 def validar_entero_positivo(n):
+    '''
+    Funcion para verificar si el argumento pasado es un numero.
+    '''
     es_entero = False
     try:
         int(n)

@@ -12,6 +12,9 @@ class Usuario:
         return " Usuario: {} \n Nombre completo: {} \n Edad: {} \n Genero: {} \n Puntaje: {}\n".format(self.username, self.nombre, self.edad, self.genero, self.puntaje)
 
 def tiene_espacios(username):
+    '''
+    Funcion para detectar espacios en un string.
+    '''
     hay_espacios = False
     for char in username:
         if char == " ":
@@ -63,7 +66,7 @@ def registrar():
 
     #Si el usuario no esta en el archivo de texto, se le pediran sus datos basicos
     if verificar_username(user):
-        print("Bienvenido de vuelta! A continuacion se muestran sus datos registrados:") 
+        print("Bienvenido de vuelta! A continuacion se muestran sus datos registrados:\n") 
         return buscar(user)
         
     else:
