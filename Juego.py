@@ -99,6 +99,9 @@ def imprimir_tablero(tablero):
                         print(columna, end="    ")
 
 def actualizar_puntaje(username, puntaje):
+    '''
+    Funcion para actualizar el puntaje del usuario en el archivo de texto.
+    '''
     archivo_usuarios = open("BaseDeDatosUsuarios.txt", "r")
 
     datos_usuarios = archivo_usuarios.readlines()

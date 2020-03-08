@@ -1,4 +1,5 @@
 #Funciones usadas en varios archivos
+
 def validar_entero_positivo(n):
     es_entero = False
     try:

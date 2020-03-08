@@ -84,7 +84,9 @@ def registrar():
 
 def actualizar(username):
     '''
-    Funcion para actualizar los datos de un usuario registrado en el archivo de texto
+    Funcion para actualizar los datos de un usuario registrado en el archivo de texto.
+
+    Toma como argumento el nombre de usuario.
     '''
     print('''
     Que dato desea modificar?

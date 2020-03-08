@@ -4,6 +4,9 @@ from Usuarios import control_usuarios
 from Juego import jugar
 
 def main():
+    '''
+    Funcion que controla todo el programa
+    '''
     print("-"*60 + "BATALLA NAVAL" + "-"*60 +"\n \n")
     print("Bienvenido al juego Batalla Naval! \n \n")
 

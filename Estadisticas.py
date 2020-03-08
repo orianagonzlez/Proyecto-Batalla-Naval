@@ -1,3 +1,3 @@
 #Hacer estadisticas
 
-#sos
+#sos hay que hacerlo
