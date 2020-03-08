@@ -7,7 +7,7 @@ class Barco:
             self.tamano = tamano
 
         def __str__(self):
-            return "B"
+            return "O"
 
         def posicion(self, tablero):
             '''Las posiciones no pueden ser contiguas
@@ -79,6 +79,27 @@ class Barco:
 
             print("sali")
             return coordenadas
+
+class Portavion(Barco):
+    def __init__(self, tamano):
+        Barco.__init__(self, tamano)
+
+    def capacidad(self):
+        print("Este buque tiene la capacidad de aterrizar helicopteros en el para el transporte de tropas.")
+
+class Buque(Barco):
+    def __init__(self, tamano):
+        Barco.__init__(self, tamano)
+
+    def capacidad(self):
+        print("Este buque tiene la capacidad de comunicarse con tierra y los otros miembros de la flota.")
+
+class Submarino(Barco):
+    def __init__(self, tamano):
+        Barco.__init__(self, tamano)
+
+    def capacidad(self):
+        print("Este submarino tiene la capacidad de poder sumergirse y emerger del agua.")
 
 def posicionar_barcos(barco, lista_de_coord, tablero, posiciones):
     for coord in lista_de_coord:
@@ -152,22 +173,22 @@ def jugar(username):
         disparos_repetidos = 0
         disparos_necesarios = 9
 
-        portavion = Barco(3)
+        portavion = Portavion(3)
         posicionar_barcos(portavion, portavion.posicion(tablero), tablero, posiciones_barcos)
 
-        buque = Barco(2)
+        buque = Buque(2)
         posicionar_barcos(buque, buque.posicion(tablero), tablero, posiciones_barcos)
 
-        submarino1 = Barco(1)
+        submarino1 = Submarino(1)
         posicionar_barcos(submarino1, submarino1.posicion(tablero), tablero, posiciones_barcos)
 
-        submarino2 = Barco(1)
+        submarino2 = Submarino(1)
         posicionar_barcos(submarino2, submarino2.posicion(tablero), tablero, posiciones_barcos)
 
-        submarino3 = Barco(1)
+        submarino3 = Submarino(1)
         posicionar_barcos(submarino3, submarino3.posicion(tablero), tablero, posiciones_barcos)
 
-        submarino4 = Barco(1)
+        submarino4 = Submarino(1)
         posicionar_barcos(submarino4, submarino4.posicion(tablero), tablero, posiciones_barcos)
 
         while disparos_necesarios != 0:

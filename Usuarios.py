@@ -1,15 +1,15 @@
 from FuncionesComunes import pedir_entero_positivo_validado
   
 class Usuario:
-    def __init__(self, username, nombre, edad, genero, puntaje = 0):
+    def __init__(self, username, nombre, edad, genero, puntos_totales = "0"):
         self.username = username
         self.nombre = nombre
         self.edad = edad
         self.genero = genero
-        self.puntaje = puntaje
+        self.puntos_totales = puntos_totales
 
     def __str__(self):
-        return " Usuario: {} \n Nombre completo: {} \n Edad: {} \n Genero: {} \n Puntaje: {}\n".format(self.username, self.nombre, self.edad, self.genero, self.puntaje)
+        return " Usuario: {} \n Nombre completo: {} \n Edad: {} \n Genero: {} \n Puntos totales: {}\n".format(self.username, self.nombre, self.edad, self.genero, self.puntos_totales)
 
 def tiene_espacios(username):
     '''
@@ -28,9 +28,9 @@ def verificar_username(username):
     Si el usuario ya esta registrado retorna verdadero, si no retorna falso.
     '''
     try:
-        archivo_usuarios = open("BaseDeDatosUsuarios.txt", "r")
-
-        for usuario in archivo_usuarios.readlines():
+        with open("BaseDeDatosUsuarios.txt", "r") as archivo_usuarios:
+            all_users = archivo_usuarios.readlines()
+        for usuario in all_users:
             user = usuario[:-1].split(",")
             print('user', user)
             if user[0] == username:
@@ -43,12 +43,14 @@ def buscar(username):
     '''
     Funcion para buscar al usuario en el archivo de texto que retorna al usuario como objeto
     '''
-    archivo_usuarios =  open("BaseDeDatosUsuarios.txt", "r")  
-    
-    for usuario in archivo_usuarios.readlines():
+    with open("BaseDeDatosUsuarios.txt", "r") as archivo_usuarios:
+        all_users = archivo_usuarios.readlines()
+    for usuario in all_users:
         user = usuario[:-1].split(",")
+        print(user)
         if user[0] == username:
-            return(Usuario(user[0], user[1], user[2], user[3], user[4]))
+            print("lo encontre")
+            return Usuario(user[0], user[1], user[2], user[3], user[4])
 
 def registrar():
     '''
@@ -73,14 +75,13 @@ def registrar():
         nombre = input("Ingrese su nombre completo: ")
         edad = pedir_entero_positivo_validado("Ingrese su edad: ")
         genero = input("Ingrese su genero ('M' es masculino y 'F' es fememino): ")
-        while genero.lower() != "m" and genero.lower() != "f":
+        while genero.upper() != "M" and genero.upper() != "F":
             genero = input("Ingrese su genero: ")
 
-        usuario = Usuario(user, nombre, edad, genero)
+        usuario = Usuario(user, nombre.title(), edad, genero.upper())
 
-        archivo_usuarios = open("BaseDeDatosUsuarios.txt", "a+")
-
-        archivo_usuarios.write("{},{},{},{},{}\n".format(usuario.username, usuario.nombre, usuario.edad, usuario.genero, usuario.puntaje))
+        with open("BaseDeDatosUsuarios.txt", "a+") as archivo_usuarios:
+            archivo_usuarios.write("{},{},{},{},{}\n".format(usuario.username, usuario.nombre, usuario.edad, usuario.genero, usuario.puntos_totales))
 
         print("\nEl usuario '{}' se ha registrado correctamente\n".format(usuario.username))
         return usuario
@@ -101,12 +102,12 @@ def actualizar(username):
     ''')
 
     dato = pedir_entero_positivo_validado("Ingrese el numero de la opcion que desea modificar: ")
-    while dato < 1 and dato > 4:
+    while dato < 1 or dato > 4:
         dato = pedir_entero_positivo_validado("Ingrese el numero de la opcion que desea modificar: ")
     
-    archivo_usuarios = open("BaseDeDatosUsuarios.txt", "r")
+    with open("BaseDeDatosUsuarios.txt", "r") as archivo_usuarios:
+        datos_usuarios = archivo_usuarios.readlines()
 
-    datos_usuarios = archivo_usuarios.readlines()
     print(datos_usuarios)
 
     for i, usuario in enumerate(datos_usuarios):
@@ -125,14 +126,17 @@ def actualizar(username):
             elif dato == 2:
                 print("escogi", dato)
                 nuevo_valor = input("Ingrese su nombre completo: ")
+                nuevo_valor = nuevo_valor.title()
             elif dato == 3:
                 print("escogi", dato)
-                nuevo_valor = pedir_entero_positivo_validado("Ingrese su edad: ")
+                nuevo_valor = str(pedir_entero_positivo_validado("Ingrese su edad: "))
             elif dato == 4:
                 print("escogi", dato)
                 nuevo_valor = input("Ingrese su genero ('M' es masculino y 'F' es fememino): ")
-                while nuevo_valor.lower() != "m" and nuevo_valor.lower() != "f":
+                while nuevo_valor.upper() != "M" and nuevo_valor.upper() != "F":
                     nuevo_valor = input("Ingrese su genero: ")
+
+                nuevo_valor = nuevo_valor.upper()
             
             usuario_as_lista[dato - 1] = nuevo_valor
 
@@ -142,14 +146,13 @@ def actualizar(username):
 
             print("modificado", datos_usuarios)
 
-            archivo_usuarios = open("BaseDeDatosUsuarios.txt", "w")
-
-            archivo_usuarios.writelines(datos_usuarios)
+            with open("BaseDeDatosUsuarios.txt", "w") as archivo_usuarios:
+                archivo_usuarios.writelines(datos_usuarios)
+    
 
             print("Sus datos han sido actualizados.\n")
-            print(buscar(username))
-            print(username)
-            return username
+
+            return buscar(username)
 
 
 
@@ -162,9 +165,9 @@ def control_usuarios(quiere_actualizar, username=""):
     '''
 
     if quiere_actualizar:
-        actualizar(username)
+        return actualizar(username)
     else:
-        print("Bienvenido al sistema de registro de usuarios de Batalla Naval.\n")
+        print("\nBienvenido al sistema de registro de usuarios de Batalla Naval.\n")
         return registrar()
 
 

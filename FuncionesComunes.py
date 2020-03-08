@@ -14,6 +14,9 @@ def validar_entero_positivo(n):
     return es_entero
 
 def pedir_entero_positivo_validado(mensaje):
+    '''
+    Funcion para pedir un numero positivo hasta que el usuario ingrese realmente un numero positivo.
+    '''
     n = input(mensaje)
     while not validar_entero_positivo(n):
         n = input(mensaje)

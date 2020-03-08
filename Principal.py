@@ -17,22 +17,24 @@ def main():
     continuar = 1
     while continuar:
         print('''
-        Que desea hacer?
+    Que desea hacer?
 
-        1. Jugar
-        2. Actualizar datos
-        3. Cambiar de usuario
-        4. Finalizar programa
+    1. Jugar
+    2. Actualizar datos
+    3. Cambiar de usuario
+    4. Finalizar programa
         ''')
 
-        accion = pedir_entero_positivo_validado("Selecione una opcion: ")
+        accion = pedir_entero_positivo_validado("Seleccione una opcion: ")
         while accion < 1 or accion > 4:
-            accion = pedir_entero_positivo_validado("Selecione una opcion: ")
+            accion = pedir_entero_positivo_validado("Seleccione una opcion: ")
 
         if accion == 1:
             jugar(user.username)
         elif accion == 2:
-            user = control_usuarios(1, username=user.username)
+            user = control_usuarios(1, username= user.username)
+            print(user)
+            
         elif accion == 3:
             user = control_usuarios(0)
             print(user)
