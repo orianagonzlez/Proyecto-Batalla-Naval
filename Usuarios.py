@@ -1,12 +1,14 @@
 from FuncionesComunes import pedir_entero_positivo_validado
   
 class Usuario:
-    def __init__(self, username, nombre, edad, genero, puntos_totales = "0"):
+    def __init__(self, username, nombre, edad, genero, puntos_totales = "0", disparos = "0", partidas = "0"):
         self.username = username
         self.nombre = nombre
         self.edad = edad
         self.genero = genero
         self.puntos_totales = puntos_totales
+        self.disparos = disparos
+        self.partidas = partidas
 
     def __str__(self):
         return " Usuario: {} \n Nombre completo: {} \n Edad: {} \n Genero: {} \n Puntos totales: {}\n".format(self.username, self.nombre, self.edad, self.genero, self.puntos_totales)
@@ -81,7 +83,7 @@ def registrar():
         usuario = Usuario(user, nombre.title(), edad, genero.upper())
 
         with open("BaseDeDatosUsuarios.txt", "a+") as archivo_usuarios:
-            archivo_usuarios.write("{},{},{},{},{}\n".format(usuario.username, usuario.nombre, usuario.edad, usuario.genero, usuario.puntos_totales))
+            archivo_usuarios.write("{},{},{},{},{},{},{}\n".format(usuario.username, usuario.nombre, usuario.edad, usuario.genero, usuario.puntos_totales, usuario.disparos, usuario.partidas))
 
         print("\nEl usuario '{}' se ha registrado correctamente\n".format(usuario.username))
         return usuario

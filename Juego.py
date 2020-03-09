@@ -122,7 +122,7 @@ def imprimir_tablero(tablero):
         for columna in fila:
             print(columna, end="    ")
 
-def actualizar_puntaje(username, puntaje):
+def actualizar_puntaje(username, puntaje, disparos):
     '''
     Funcion para actualizar el puntaje del usuario en el archivo de texto.
     '''
@@ -134,9 +134,11 @@ def actualizar_puntaje(username, puntaje):
     for i, usuario in enumerate(datos_usuarios):
         usuario_as_lista = usuario[:-1].split(",")
         if usuario_as_lista[0] == username:
-            print("encontre ussuairo")
+            print("encontre usuairo")
 
             usuario_as_lista[4] = str(int(usuario_as_lista[4]) + puntaje)
+            usuario_as_lista[5] = str(int(usuario_as_lista[5]) + disparos)
+            usuario_as_lista[6] = str(int(usuario_as_lista[6]) + 1)
 
             usuario_as_str = ",".join(usuario_as_lista) + "\n"
 
@@ -207,7 +209,7 @@ def jugar(username):
 
 
             if tablero[y - 1][x - 1] == "O":
-                print("fallaste")
+                print("\nFallaste\n")
                 tablero[y - 1][x - 1] = "X"
                 disparos_realizados += 1
                 if puntaje >= 2:
@@ -219,7 +221,7 @@ def jugar(username):
                 print("\nDisparo ya realizado\n")
             else:
                 tablero[y - 1][x - 1] = "F"
-                print("acertaste")
+                print("\nAcertaste\n")
                 disparos_realizados += 1
                 puntaje += 10
                 disparos_necesarios -= 1
@@ -243,7 +245,7 @@ def jugar(username):
 
         print('\n')
 
-        actualizar_puntaje(username, puntaje)
+        actualizar_puntaje(username, puntaje, disparos_realizados)
 
         #Preguntando si se quiere jugar otra partida
         continuar = input("Ingrese 1 si desea volver a jugar y 0 en caso contrario: ")
