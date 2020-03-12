@@ -1,3 +1,7 @@
+from colorama import init, Fore, Back, Style
+
+init(autoreset=True)
+
 #Funciones usadas en varios archivos
 
 def validar_entero_positivo(n):
@@ -21,3 +25,11 @@ def pedir_entero_positivo_validado(mensaje):
     while not validar_entero_positivo(n):
         n = input(mensaje)
     return int(n)
+
+def validar_nombre(nombre):
+    nombre = nombre.replace(" ", "")
+    return nombre.isalpha()
+
+def imprimir_vineta(color, estilo):
+    print(color + estilo + "•", end=" ")
+

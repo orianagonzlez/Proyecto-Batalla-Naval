@@ -1,6 +1,8 @@
 import random
 from FuncionesComunes import pedir_entero_positivo_validado
 
+#Hacer instrucciones, que incluya print de capacidades de los barcos
+
 class Barco:
 
         def __init__(self, tamano):

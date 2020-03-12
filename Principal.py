@@ -1,22 +1,46 @@
 #Funcion principal
+from time import sleep
+from colorama import init, Fore, Back, Style
 from FuncionesComunes import pedir_entero_positivo_validado
 from Usuarios import control_usuarios
 from Juego import jugar
-from Estadisticas import calculo_estadisticas
+from Estadisticas import calculo_estadisticas, top10
+
+init(autoreset=True)
 
 def main():
+    
     '''
     Funcion que controla todo el programa.
     '''
-    print("-"*60 + "BATALLA NAVAL" + "-"*60 +"\n \n")
+#dotmatrix
+
+    print(Fore.MAGENTA + Style.BRIGHT + '''
+
+██████╗  █████╗ ████████╗ █████╗ ██╗     ██╗      █████╗         ███╗   ██╗ █████╗ ██╗   ██╗ █████╗ ██╗     
+██╔══██╗██╔══██╗╚══██╔══╝██╔══██╗██║     ██║     ██╔══██╗        ████╗  ██║██╔══██╗██║   ██║██╔══██╗██║     
+██████╔╝███████║   ██║   ███████║██║     ██║     ███████║        ██╔██╗ ██║███████║██║   ██║███████║██║     
+██╔══██╗██╔══██║   ██║   ██╔══██║██║     ██║     ██╔══██║        ██║╚██╗██║██╔══██║╚██╗ ██╔╝██╔══██║██║     
+██████╔╝██║  ██║   ██║   ██║  ██║███████╗███████╗██║  ██║        ██║ ╚████║██║  ██║ ╚████╔╝ ██║  ██║███████╗
+╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚══════╝╚═╝  ╚═╝        ╚═╝  ╚═══╝╚═╝  ╚═╝  ╚═══╝  ╚═╝  ╚═╝╚══════╝
+
+    ''' + "\n \n")
+
     print("Bienvenido al juego Batalla Naval! \n \n")
 
+    sleep(3)
 
     user = control_usuarios(0)
     print(user)
 
+
     continuar = 1
     while continuar:
+
+        sleep(5)
+        top10()
+
+        sleep(3)
         print('''
     Que desea hacer?
 
@@ -33,15 +57,18 @@ def main():
 
         if accion == 1:
             jugar(user.username)
+            sleep(3)
         elif accion == 2:
             user = control_usuarios(1, username= user.username)
             print(user)
-
+            sleep(3)
         elif accion == 3:
             user = control_usuarios(0)
             print(user)
+            sleep(3)
         elif accion == 4:
             calculo_estadisticas()
+            sleep(3)
         else:
             continuar = 0
         

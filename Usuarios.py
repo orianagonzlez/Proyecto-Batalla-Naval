@@ -1,7 +1,7 @@
 from FuncionesComunes import pedir_entero_positivo_validado
   
 class Usuario:
-    def __init__(self, username, nombre, edad, genero, puntos_totales = "0", disparos = "0", partidas = "0"):
+    def __init__(self, username, nombre, edad, genero, puntos_totales="0", disparos="0", partidas="0"):
         self.username = username
         self.nombre = nombre
         self.edad = edad
@@ -11,8 +11,12 @@ class Usuario:
         self.partidas = partidas
 
     def __str__(self):
-        return " Usuario: {} \n Nombre completo: {} \n Edad: {} \n Genero: {} \n Puntos totales: {}\n".format(self.username, self.nombre, self.edad, self.genero, self.puntos_totales)
+        return "• Usuario: {} \n• Nombre completo: {} \n• Edad: {} \n• Genero: {} \n• Puntos totales: {}\n".format(self.username, self.nombre, self.edad, self.genero, self.puntos_totales)
 
+def validar_nombre(nombre):
+    nombre = nombre.replace(" ", "")
+    return nombre.isalpha()
+    
 def tiene_espacios(username):
     '''
     Funcion para detectar espacios en un string.
@@ -34,7 +38,6 @@ def verificar_username(username):
             all_users = archivo_usuarios.readlines()
         for usuario in all_users:
             user = usuario[:-1].split(",")
-            print('user', user)
             if user[0] == username:
                 return True
         return False
@@ -49,9 +52,7 @@ def buscar(username):
         all_users = archivo_usuarios.readlines()
     for usuario in all_users:
         user = usuario[:-1].split(",")
-        print(user)
         if user[0] == username:
-            print("lo encontre")
             return Usuario(user[0], user[1], user[2], user[3], user[4])
 
 def registrar():
@@ -65,17 +66,22 @@ def registrar():
     user = input("Ingrese su nombre de usuario: ")
 
     while tiene_espacios(user) or user != user.lower() or len(user) >= 30:
-        print(tiene_espacios(user), user != user.lower(), len(user) >= 30)
-        user = input("Ingrese su nombre de usuario. Solo puede utilizar letras minúsculas, no puede contener espacios y no puede tener más de 30 caracteres: ")
+        user = input("Ingrese su nombre de usuario. Solo puede utilizar letras minúsculas, no puede contener espacios y \
+no puede tener más de 30 caracteres: ")
 
     #Si el usuario no esta en el archivo de texto, se le pediran sus datos basicos
     if verificar_username(user):
-        print("Bienvenido de vuelta! A continuacion se muestran sus datos registrados:\n") 
+        print("\nBienvenido de vuelta! A continuacion se muestran sus datos registrados:\n") 
         return buscar(user)
         
     else:
         nombre = input("Ingrese su nombre completo: ")
+        while not validar_nombre(nombre):
+            nombre = input("Ingrese su nombre completo. Solo puede contener letras y espacios: ")
+
         edad = pedir_entero_positivo_validado("Ingrese su edad: ")
+        while edad > 100 or edad < 5:
+            edad = pedir_entero_positivo_validado("Ingrese su edad: ")
         genero = input("Ingrese su genero ('M' es masculino y 'F' es fememino): ")
         while genero.upper() != "M" and genero.upper() != "F":
             genero = input("Ingrese su genero: ")
@@ -85,7 +91,7 @@ def registrar():
         with open("BaseDeDatosUsuarios.txt", "a+") as archivo_usuarios:
             archivo_usuarios.write("{},{},{},{},{},{},{}\n".format(usuario.username, usuario.nombre, usuario.edad, usuario.genero, usuario.puntos_totales, usuario.disparos, usuario.partidas))
 
-        print("\nEl usuario '{}' se ha registrado correctamente\n".format(usuario.username))
+        print("\nEl usuario '{}' se ha registrado correctamente.\n".format(usuario.username))
         return usuario
 
 def actualizar(username):
@@ -110,52 +116,48 @@ def actualizar(username):
     with open("BaseDeDatosUsuarios.txt", "r") as archivo_usuarios:
         datos_usuarios = archivo_usuarios.readlines()
 
-    print(datos_usuarios)
-
     for i, usuario in enumerate(datos_usuarios):
-        print("recorriendo usuarios")
         usuario_as_lista = usuario[:-1].split(",")
         if usuario_as_lista[0] == username:
-            print("encontre ussuairo")
             if dato == 1:
-                print("escogi", dato)
                 nuevo_valor = input("Ingrese el nuevo nombre de usuario: ")
 
                 while tiene_espacios(nuevo_valor) or nuevo_valor != nuevo_valor.lower() or len(nuevo_valor) >= 30:
-                    nuevo_valor = input("Ingrese el nuevo nombre de usuario. Solo puede utilizar letras minúsculas, no puede contener espacios y no puede tener más de 30 caracteres: ")
+                    nuevo_valor = input("Ingrese el nuevo nombre de usuario. Solo puede utilizar letras minúsculas, \
+                                        no puede contener espacios y no puede tener más de 30 caracteres: ")
                 
                 username = nuevo_valor
             elif dato == 2:
                 print("escogi", dato)
                 nuevo_valor = input("Ingrese su nombre completo: ")
+                while not validar_nombre(nuevo_valor):
+                    nuevo_valor = input("Ingrese su nombre completo. Solo puede contener letras y espacios: ")
+
                 nuevo_valor = nuevo_valor.title()
             elif dato == 3:
-                print("escogi", dato)
-                nuevo_valor = str(pedir_entero_positivo_validado("Ingrese su edad: "))
+                nuevo_valor = pedir_entero_positivo_validado("Ingrese su edad: ")
+                while nuevo_valor > 100 or nuevo_valor < 5:
+                    nuevo_valor = pedir_entero_positivo_validado("Ingrese su edad: ")
+
             elif dato == 4:
-                print("escogi", dato)
                 nuevo_valor = input("Ingrese su genero ('M' es masculino y 'F' es fememino): ")
                 while nuevo_valor.upper() != "M" and nuevo_valor.upper() != "F":
                     nuevo_valor = input("Ingrese su genero: ")
 
                 nuevo_valor = nuevo_valor.upper()
             
-            usuario_as_lista[dato - 1] = nuevo_valor
+            usuario_as_lista[dato - 1] = str(nuevo_valor)
 
             usuario_as_str = ",".join(usuario_as_lista) + "\n"
 
             datos_usuarios[i] = usuario_as_str
 
-            print("modificado", datos_usuarios)
-
             with open("BaseDeDatosUsuarios.txt", "w") as archivo_usuarios:
                 archivo_usuarios.writelines(datos_usuarios)
     
-
-            print("Sus datos han sido actualizados.\n")
+            print("\nSus datos han sido actualizados.\n")
 
             return buscar(username)
-
 
 
 def control_usuarios(quiere_actualizar, username=""):

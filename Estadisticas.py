@@ -1,6 +1,40 @@
-#Hacer estadisticas
+from colorama import init, Fore, Back, Style
+from FuncionesComunes import imprimir_vineta
 
-#pendiente
+init(autoreset=True)
+
+def top10():
+    lista_top10 = []
+
+    with open("BaseDeDatosUsuarios.txt", "r") as archivo_usuarios:
+        all_users = archivo_usuarios.readlines()
+
+    for usuario in all_users:
+        user = usuario[:-1].split(",")
+
+        lista_top10.append(user)
+
+    lista_top10.sort(key= lambda usuario: int(usuario[4]), reverse=True)
+
+    print(Fore.CYAN + Style.NORMAL + '''
+        
+████████╗ ██████╗ ██████╗        ██╗ ██████╗   *
+╚══██╔══╝██╔═══██╗██╔══██╗      ███║██╔═████╗
+   ██║   ██║   ██║██████╔╝      ╚██║██║██╔██║
+   ██║   ██║   ██║██╔═══╝        ██║████╔╝██║
+   ██║   ╚██████╔╝██║            ██║╚██████╔╝
+   ╚═╝    ╚═════╝ ╚═╝            ╚═╝ ╚═════╝ 
+          ''', "\n")
+
+    for i, usuario in enumerate(lista_top10, 1):
+        if i < 11:
+            print(Fore.YELLOW + Style.NORMAL + "\t" + str(i) +".", end="") 
+            print("\t" + usuario[0] + "/" + usuario[4] + "/" + usuario[5] + "\n")
+        else:
+            break
+    print(Style.DIM + "*Se muestra: nombre_de_usuario\puntuacion_total\disparos_realizados")
+
+
 
 def calculo_estadisticas():
 
@@ -28,7 +62,6 @@ def calculo_estadisticas():
             if rango["min"] <= int(user[2]) and rango["max"] >= int(user[2]):
                 rango["usuarios"] += 1
 
-    print(rangos)
     mas_usuarios = []
 
     for i, rango in enumerate(rangos):
@@ -38,8 +71,19 @@ def calculo_estadisticas():
             mas_usuarios[0] = i
         elif rango["usuarios"] == rangos[mas_usuarios[0]]["usuarios"]:
             mas_usuarios.append(i)
-            
-    print("\nRango(s) de edad con mas jugadores: ", end="")
+
+    print(Fore.CYAN + Style.BRIGHT + "\n \n" + '''
+███████╗███████╗████████╗ █████╗ ██████╗ ██╗███████╗████████╗██╗ ██████╗ █████╗ ███████╗
+██╔════╝██╔════╝╚══██╔══╝██╔══██╗██╔══██╗██║██╔════╝╚══██╔══╝██║██╔════╝██╔══██╗██╔════╝
+█████╗  ███████╗   ██║   ███████║██║  ██║██║███████╗   ██║   ██║██║     ███████║███████╗
+██╔══╝  ╚════██║   ██║   ██╔══██║██║  ██║██║╚════██║   ██║   ██║██║     ██╔══██║╚════██║
+███████╗███████║   ██║   ██║  ██║██████╔╝██║███████║   ██║   ██║╚██████╗██║  ██║███████║
+╚══════╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═════╝ ╚═╝╚══════╝   ╚═╝   ╚═╝ ╚═════╝╚═╝  ╚═╝╚══════╝
+    
+    ''')
+
+    imprimir_vineta(Fore.MAGENTA, Style.BRIGHT)     
+    print("Rango(s) de edad con mas jugadores: ", end="")
 
     for indice in mas_usuarios:
         if indice != mas_usuarios[-1]:
@@ -47,11 +91,14 @@ def calculo_estadisticas():
         else:
             print("{} y {} anos". format(rangos[indice]["min"], rangos[indice]["max"]), end=".\n")
 
+    imprimir_vineta(Fore.MAGENTA, Style.NORMAL)
     print("Cantidad total de puntos de genero femenino:", puntos_femenino)
+    imprimir_vineta(Fore.MAGENTA, Style.NORMAL)
     print("Cantidad total de puntos de genero masculino:", puntos_masculino)
+    imprimir_vineta(Fore.MAGENTA, Style.NORMAL)
     if partidas != 0:
-        print("Promedio de disparos realizados para ganar:", disparos_totales / partidas)
+        print("Promedio de disparos realizados para ganar:", disparos_totales / partidas, "\n")
     else:
         print("Promedio de disparos realizados para ganar: 0") #no se
-    
 
+    
