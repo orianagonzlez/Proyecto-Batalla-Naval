@@ -1,7 +1,8 @@
 import random
-from FuncionesComunes import pedir_entero_positivo_validado
+from colorama import init, Fore, Style
+from FuncionesComunes import pedir_entero_positivo_validado, separador
 
-#Hacer instrucciones, que incluya print de capacidades de los barcos
+init(autoreset=True)
 
 class Barco:
 
@@ -23,8 +24,6 @@ class Barco:
             dentro_tablero = False
             ocupada = True
 
-            print("iniciando bucle")
-
             while contigua or not dentro_tablero or ocupada:
                 contigua = False
                 dentro_tablero = True
@@ -43,16 +42,11 @@ class Barco:
                 
                 for i in range(self.tamano):
                     if orientacion == 0:
-                        print("horixontal")
                         coordenadas.append((x + i, y))
                     elif orientacion == 1:
-                        print("vertical")
                         coordenadas.append((x, y + i))
                     else:
                         coordenadas.append((x, y))
-
-                print("")
-                print(coordenadas, end="\n \n")
 
                 for coordenada in coordenadas:
                     if coordenada[0] > 9 or coordenada[1] > 9:
@@ -79,7 +73,6 @@ class Barco:
                                 contigua = True
                                 break
 
-            print("sali")
             return coordenadas
 
 class Portavion(Barco):
@@ -87,28 +80,47 @@ class Portavion(Barco):
         Barco.__init__(self, tamano)
 
     def capacidad(self):
-        print("Este buque tiene la capacidad de aterrizar helicopteros en el para el transporte de tropas.")
+        return "Este buque tiene la capacidad de aterrizar helicopteros en el para el transporte de tropas."
 
 class Buque(Barco):
     def __init__(self, tamano):
         Barco.__init__(self, tamano)
 
     def capacidad(self):
-        print("Este buque tiene la capacidad de comunicarse con tierra y los otros miembros de la flota.")
+        return "Este buque tiene la capacidad de comunicarse con tierra y los otros miembros de la flota."
 
 class Submarino(Barco):
     def __init__(self, tamano):
         Barco.__init__(self, tamano)
 
     def capacidad(self):
-        print("Este submarino tiene la capacidad de poder sumergirse y emerger del agua.")
+        return "Este submarino tiene la capacidad de poder sumergirse y emerger del agua."
 
 def posicionar_barcos(barco, lista_de_coord, tablero, posiciones):
     for coord in lista_de_coord:
         tablero[coord[1]][coord[0]] = barco
         posiciones.append(coord)
 
+def instrucciones(portavion, buque, submarino):
+    '''
+    Funcion que imprime las instrucciones del juego. Recibe como argumento un objeto de cada clase hija de Barco.
+    '''
+    print(Fore.MAGENTA + "|| INSTRUCCIONES DEL JUEGO ||")
+    print('''    
 
+El objetivo es descubrir en la menor cantidad de disparos la flota de barcos.
+
+Dicha flota esta conformada por:
+''')
+    print(Fore.CYAN + "\t•", "1 buque que ocupa 3 posiciones del tablero. {}".format(portavion.capacidad()),
+          Fore.CYAN + "\n\t•", "1 buque que ocupa 2 posiciones del tablero. {}".format(buque.capacidad()),
+          Fore.CYAN + "\n\t•", "4 submarinos que ocupan 1 posicion del tablero cada uno. {}".format(submarino.capacidad()))
+
+    print('''
+Si el barco ocupa mas de 1 posicion, su orientacion puede ser vertical u horizontal. 
+Ningun barco tiene otros barcos en sus posiciones contiguas (arriba, abajo, izquierda o derecha).
+    ''')
+    separador()
 
 def imprimir_tablero(tablero):
     '''
@@ -116,13 +128,19 @@ def imprimir_tablero(tablero):
     '''
     print("", end="\t")
     for j in range(1,11):
-        print(j, end="    ")
+        print(Fore.BLUE + str(j), end="    ")
 
     for i, fila in enumerate(tablero, 1):
         print("\n")
-        print(i, end="\t")
+        print(Fore.BLUE + str(i), end="\t")
         for columna in fila:
-            print(columna, end="    ")
+            if columna == "F":
+                print(Fore.GREEN + columna, end="    ")
+            elif columna == "X":
+                print(Fore.RED + columna, end="    ")
+            else:
+                print(columna, end="    ")
+    print("\n")
 
 def actualizar_puntaje(username, puntaje, disparos):
     '''
@@ -195,23 +213,25 @@ def jugar(username):
         submarino4 = Submarino(1)
         posicionar_barcos(submarino4, submarino4.posicion(tablero), tablero, posiciones_barcos)
 
+        instrucciones(portavion, buque, submarino1)
+
         while disparos_necesarios != 0:
 
             print("Puntaje:", puntaje, end="\n \n")
 
             imprimir_tablero(tablero)
 
-            x = pedir_entero_positivo_validado("\n \n Ingrese la coordenada x donde desea disparar. Debe ser un numero entre 1 y 10: ")
-            while x > 10:
-                x = pedir_entero_positivo_validado("\n Ingrese la coordenada x donde desea disparar. Debe ser un numero entre 1 y 10: ")
+            x = pedir_entero_positivo_validado("\nIngrese la coordenada horizontal (x) donde desea disparar. Debe ser un numero entre 1 y 10: ")
+            while x > 10 or x < 1:
+                x = pedir_entero_positivo_validado("\nIngrese la coordenada horizontal (x) donde desea disparar. Debe ser un numero entre 1 y 10: ")
         
-            y = pedir_entero_positivo_validado("\n Ingrese la coordenada y donde desea disparar. Debe ser un numero entre 1 y 10: ")
-            while y > 10:
-                y = pedir_entero_positivo_validado("\n Ingrese la coordenada y donde desea disparar. Debe ser un numero entre 1 y 10: ")
+            y = pedir_entero_positivo_validado("\nIngrese la coordenada vertical (y) donde desea disparar. Debe ser un numero entre 1 y 10: ")
+            while y > 10 or y < 1:
+                y = pedir_entero_positivo_validado("\nIngrese la coordenada vertical (y) donde desea disparar. Debe ser un numero entre 1 y 10: ")
 
 
             if tablero[y - 1][x - 1] == "O":
-                print("\nFallaste\n")
+                print(Fore.RED + "\nFallaste. Sigue intentando, tu puedes!\n")
                 tablero[y - 1][x - 1] = "X"
                 disparos_realizados += 1
                 if puntaje >= 2:
@@ -220,10 +240,10 @@ def jugar(username):
                     puntaje = 0
             elif tablero[y - 1][x - 1] == "X" or tablero[y - 1][x - 1] == "F":
                 disparos_repetidos += 1
-                print("\nDisparo ya realizado\n")
+                print(Fore.MAGENTA + "\nDisparo ya realizado! Por favor ingresa otra coordenada.\n")
             else:
                 tablero[y - 1][x - 1] = "F"
-                print("\nAcertaste\n")
+                print(Fore.GREEN + "\nAcertaste. Sigue asi!\n")
                 disparos_realizados += 1
                 puntaje += 10
                 disparos_necesarios -= 1

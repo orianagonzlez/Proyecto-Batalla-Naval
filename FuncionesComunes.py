@@ -1,4 +1,4 @@
-from colorama import init, Fore, Back, Style
+from colorama import init, Fore, Style
 
 init(autoreset=True)
 
@@ -30,6 +30,13 @@ def validar_nombre(nombre):
     nombre = nombre.replace(" ", "")
     return nombre.isalpha()
 
-def imprimir_vineta(color, estilo):
-    print(color + estilo + "•", end=" ")
+def separador():
+    print("")
+    print(Fore.BLUE + Style.DIM + "~ "*80)
+    print(Fore.CYAN + Style.DIM + "~ "*80)
+    print("")
+'''
+print("⌜                                       ⌝" + "\n"*18)
+print("⌞                                       ⌟")
 
+print(Fore.MAGENTA + "•", separador())'''

@@ -1,4 +1,7 @@
 from FuncionesComunes import pedir_entero_positivo_validado
+from colorama import init, Fore, Style
+
+init(autoreset=True)
   
 class Usuario:
     def __init__(self, username, nombre, edad, genero, puntos_totales="0", disparos="0", partidas="0"):
@@ -100,9 +103,8 @@ def actualizar(username):
 
     Toma como argumento el nombre de usuario.
     '''
+    print(Fore.MAGENTA + Style.NORMAL + "Que dato desea modificar?")
     print('''
-    Que dato desea modificar?
-
     1. Nombre de usuario
     2. Nombre completo
     3. Edad
@@ -116,6 +118,7 @@ def actualizar(username):
     with open("BaseDeDatosUsuarios.txt", "r") as archivo_usuarios:
         datos_usuarios = archivo_usuarios.readlines()
 
+    print("")
     for i, usuario in enumerate(datos_usuarios):
         usuario_as_lista = usuario[:-1].split(",")
         if usuario_as_lista[0] == username:
@@ -124,7 +127,7 @@ def actualizar(username):
 
                 while tiene_espacios(nuevo_valor) or nuevo_valor != nuevo_valor.lower() or len(nuevo_valor) >= 30:
                     nuevo_valor = input("Ingrese el nuevo nombre de usuario. Solo puede utilizar letras minúsculas, \
-                                        no puede contener espacios y no puede tener más de 30 caracteres: ")
+no puede contener espacios y no puede tener más de 30 caracteres: ")
                 
                 username = nuevo_valor
             elif dato == 2:

@@ -1,5 +1,4 @@
-from colorama import init, Fore, Back, Style
-from FuncionesComunes import imprimir_vineta
+from colorama import init, Fore, Style
 
 init(autoreset=True)
 
@@ -72,6 +71,8 @@ def calculo_estadisticas():
         elif rango["usuarios"] == rangos[mas_usuarios[0]]["usuarios"]:
             mas_usuarios.append(i)
 
+    promedio_disparos = disparos_totales / partidas
+
     print(Fore.CYAN + Style.BRIGHT + "\n \n" + '''
 ███████╗███████╗████████╗ █████╗ ██████╗ ██╗███████╗████████╗██╗ ██████╗ █████╗ ███████╗
 ██╔════╝██╔════╝╚══██╔══╝██╔══██╗██╔══██╗██║██╔════╝╚══██╔══╝██║██╔════╝██╔══██╗██╔════╝
@@ -81,24 +82,23 @@ def calculo_estadisticas():
 ╚══════╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚═════╝ ╚═╝╚══════╝   ╚═╝   ╚═╝ ╚═════╝╚═╝  ╚═╝╚══════╝
     
     ''')
-
-    imprimir_vineta(Fore.MAGENTA, Style.BRIGHT)     
-    print("Rango(s) de edad con mas jugadores: ", end="")
+         
+    print(Fore.MAGENTA + Style.NORMAL + "• Rango(s) de edad con mas jugadores: ", end="")
 
     for indice in mas_usuarios:
         if indice != mas_usuarios[-1]:
             print("{} y {} anos". format(rangos[indice]["min"], rangos[indice]["max"]), end=", ")
         else:
-            print("{} y {} anos". format(rangos[indice]["min"], rangos[indice]["max"]), end=".\n")
+            print("{} y {} anos". format(rangos[indice]["min"], rangos[indice]["max"]), end=".\n \n")
 
-    imprimir_vineta(Fore.MAGENTA, Style.NORMAL)
-    print("Cantidad total de puntos de genero femenino:", puntos_femenino)
-    imprimir_vineta(Fore.MAGENTA, Style.NORMAL)
-    print("Cantidad total de puntos de genero masculino:", puntos_masculino)
-    imprimir_vineta(Fore.MAGENTA, Style.NORMAL)
+    
+    print(Fore.MAGENTA + Style.NORMAL + "• Cantidad total de puntos de genero femenino:", puntos_femenino, "\n")
+    
+    print(Fore.MAGENTA + Style.NORMAL + "• Cantidad total de puntos de genero masculino:", puntos_masculino, "\n")
+
     if partidas != 0:
-        print("Promedio de disparos realizados para ganar:", disparos_totales / partidas, "\n")
+        print(Fore.MAGENTA + Style.NORMAL + "• Promedio de disparos realizados para ganar:", round(promedio_disparos, 2), "\n")
     else:
-        print("Promedio de disparos realizados para ganar: 0") #no se
+        print(Fore.MAGENTA + Style.NORMAL + "• Promedio de disparos realizados para ganar:", "0") #probar
 
     
