@@ -3,6 +3,9 @@ from colorama import init, Fore, Style
 init(autoreset=True)
 
 def top10():
+    '''
+    Funcion que elabora el top 10.
+    '''
     lista_top10 = []
 
     with open("BaseDeDatosUsuarios.txt", "r") as archivo_usuarios:

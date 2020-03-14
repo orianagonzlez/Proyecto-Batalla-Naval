@@ -17,6 +17,9 @@ class Usuario:
         return "• Usuario: {} \n• Nombre completo: {} \n• Edad: {} \n• Genero: {} \n• Puntos totales: {}\n".format(self.username, self.nombre, self.edad, self.genero, self.puntos_totales)
 
 def validar_nombre(nombre):
+    '''
+    Funcion para validar que el argumento este conformado unicamente de letras y espacios.
+    '''
     nombre = nombre.replace(" ", "")
     return nombre.isalpha()
     

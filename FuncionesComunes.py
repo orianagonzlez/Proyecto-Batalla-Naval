@@ -26,10 +26,6 @@ def pedir_entero_positivo_validado(mensaje):
         n = input(mensaje)
     return int(n)
 
-def validar_nombre(nombre):
-    nombre = nombre.replace(" ", "")
-    return nombre.isalpha()
-
 def separador():
     print("")
     print(Fore.BLUE + Style.DIM + "~ "*80)

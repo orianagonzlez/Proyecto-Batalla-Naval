@@ -97,6 +97,9 @@ class Submarino(Barco):
         return "Este submarino tiene la capacidad de poder sumergirse y emerger del agua."
 
 def posicionar_barcos(barco, lista_de_coord, tablero, posiciones):
+    '''
+    Funcion 
+    '''
     for coord in lista_de_coord:
         tablero[coord[1]][coord[0]] = barco
         posiciones.append(coord)

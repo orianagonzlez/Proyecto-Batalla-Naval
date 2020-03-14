@@ -11,7 +11,7 @@ init(autoreset=True)
 def main():
     
     '''
-    Funcion que controla todo el programa.
+    Funcion que controla todo el programa. 
     '''
     separador()
 
