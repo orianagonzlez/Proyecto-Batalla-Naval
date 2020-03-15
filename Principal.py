@@ -1,4 +1,3 @@
-#Funcion principal
 from time import sleep
 from colorama import init, Fore, Style
 from FuncionesComunes import pedir_entero_positivo_validado, separador
@@ -9,20 +8,19 @@ from Estadisticas import calculo_estadisticas, top10
 init(autoreset=True)
 
 def main():
-    
     '''
-    Funcion que controla todo el programa. 
+    Función que controla todo el juego Batalla Naval (jugar, actualizar datos, cambiar de usuario, estadísticas, finalizar).
     '''
     separador()
 
     print(Fore.MAGENTA + Style.BRIGHT + '''
 
-                         ██████╗  █████╗ ████████╗ █████╗ ██╗     ██╗      █████╗         ███╗   ██╗ █████╗ ██╗   ██╗ █████╗ ██╗     
-                         ██╔══██╗██╔══██╗╚══██╔══╝██╔══██╗██║     ██║     ██╔══██╗        ████╗  ██║██╔══██╗██║   ██║██╔══██╗██║     
-                         ██████╔╝███████║   ██║   ███████║██║     ██║     ███████║        ██╔██╗ ██║███████║██║   ██║███████║██║     
-                         ██╔══██╗██╔══██║   ██║   ██╔══██║██║     ██║     ██╔══██║        ██║╚██╗██║██╔══██║╚██╗ ██╔╝██╔══██║██║     
-                         ██████╔╝██║  ██║   ██║   ██║  ██║███████╗███████╗██║  ██║        ██║ ╚████║██║  ██║ ╚████╔╝ ██║  ██║███████╗
-                         ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚══════╝╚═╝  ╚═╝        ╚═╝  ╚═══╝╚═╝  ╚═╝  ╚═══╝  ╚═╝  ╚═╝╚══════╝
+     ██████╗  █████╗ ████████╗ █████╗ ██╗     ██╗      █████╗         ███╗   ██╗ █████╗ ██╗   ██╗ █████╗ ██╗     
+     ██╔══██╗██╔══██╗╚══██╔══╝██╔══██╗██║     ██║     ██╔══██╗        ████╗  ██║██╔══██╗██║   ██║██╔══██╗██║     
+     ██████╔╝███████║   ██║   ███████║██║     ██║     ███████║        ██╔██╗ ██║███████║██║   ██║███████║██║     
+     ██╔══██╗██╔══██║   ██║   ██╔══██║██║     ██║     ██╔══██║        ██║╚██╗██║██╔══██║╚██╗ ██╔╝██╔══██║██║     
+     ██████╔╝██║  ██║   ██║   ██║  ██║███████╗███████╗██║  ██║        ██║ ╚████║██║  ██║ ╚████╔╝ ██║  ██║███████╗
+     ╚═════╝ ╚═╝  ╚═╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚══════╝╚═╝  ╚═╝        ╚═╝  ╚═══╝╚═╝  ╚═╝  ╚═══╝  ╚═╝  ╚═╝╚══════╝
     ''')
 
     separador()
@@ -43,18 +41,18 @@ def main():
         separador()
 
         sleep(2)
-        print(Fore.MAGENTA + Style.NORMAL + "Que desea hacer?")
+        print(Fore.MAGENTA + Style.NORMAL + "Qué desea hacer?")
         print('''
     1. Jugar
     2. Actualizar datos
     3. Cambiar de usuario
-    4. Ver estadisticas
+    4. Ver estadísticas
     5. Finalizar programa
     ''')
 
-        accion = pedir_entero_positivo_validado("Seleccione una opcion: ")
+        accion = pedir_entero_positivo_validado("Seleccione una opción: ")
         while accion < 1 or accion > 5:
-            accion = pedir_entero_positivo_validado("Seleccione una opcion: ")
+            accion = pedir_entero_positivo_validado("Seleccione una opción: ")
 
         if accion == 1:
             separador()
@@ -70,12 +68,10 @@ def main():
         elif accion == 4:
             separador()
             calculo_estadisticas()
+            sleep(2)
         else:
             print(Fore.MAGENTA + "\n\nHasta luego. Gracias por jugar!")
             separador()
             continuar = 0
         
 main()
-
-
-

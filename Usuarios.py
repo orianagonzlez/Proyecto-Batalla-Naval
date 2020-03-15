@@ -4,6 +4,9 @@ from colorama import init, Fore, Style
 init(autoreset=True)
   
 class Usuario:
+    '''
+    Clase de usuario. Es necesario indicar: nombre de usuario, nombre completo, edad y género.
+    '''
     def __init__(self, username, nombre, edad, genero, puntos_totales="0", disparos="0", partidas="0"):
         self.username = username
         self.nombre = nombre
@@ -14,18 +17,20 @@ class Usuario:
         self.partidas = partidas
 
     def __str__(self):
-        return "• Usuario: {} \n• Nombre completo: {} \n• Edad: {} \n• Genero: {} \n• Puntos totales: {}\n".format(self.username, self.nombre, self.edad, self.genero, self.puntos_totales)
+        return "\t• Usuario: {} \n\t• Nombre completo: {} \n\t• Edad: {} \n\t• Género: {} \n\t• Puntos totales: {}\n".format(self.username, self.nombre, self.edad, self.genero, self.puntos_totales)
 
 def validar_nombre(nombre):
     '''
-    Funcion para validar que el argumento este conformado unicamente de letras y espacios.
+    Función para validar que el argumento este conformado únicamente de letras y espacios.
+
+    Si lo anterior se cumple retorna verdadero, de lo contrario retorna falso.
     '''
     nombre = nombre.replace(" ", "")
     return nombre.isalpha()
     
 def tiene_espacios(username):
     '''
-    Funcion para detectar espacios en un string.
+    Función para detectar espacios en un string. Si hay espacios retorna verdadero, de lo contrario retorna falso.
     '''
     hay_espacios = False
     for char in username:
@@ -35,7 +40,7 @@ def tiene_espacios(username):
 
 def verificar_username(username):
     '''
-    Recibe como argumento el nombre de usuario y verifica si este ya se encuentra en el archivo de texto.
+    Función que recibe como argumento el nombre de usuario y verifica si este ya se encuentra en la base de datos de ususarios.
 
     Si el usuario ya esta registrado retorna verdadero, si no retorna falso.
     '''
@@ -48,11 +53,13 @@ def verificar_username(username):
                 return True
         return False
     except:
-        print("Todavia no hay ningun usuario registrado. Ingrese los datos pedidos a continuacion para registrarse \n")
+        print("\nTodavía no hay ningún usuario registrado. Ingrese los datos pedidos a continuación para registrarse. \n")
 
 def buscar(username):
     '''
-    Funcion para buscar al usuario en el archivo de texto que retorna al usuario como objeto
+    Función para buscar el nombre de usuario pasado como argumento en la base de datos de usuarios.
+    
+    Si encuentra al ususario, retorna al usuario como un objeto.
     '''
     with open("BaseDeDatosUsuarios.txt", "r") as archivo_usuarios:
         all_users = archivo_usuarios.readlines()
@@ -63,7 +70,9 @@ def buscar(username):
 
 def registrar():
     '''
-    Funcion para registrar a un usuario en el archivo de texto
+    Función que en caso de que un usuario no esté registrado, lo registra en la base de datos de usuarios. 
+
+    Retorna al usuario como objeto.
     '''
 
     print("Por favor, ingrese los siguientes datos.\n")
@@ -77,7 +86,7 @@ no puede tener más de 30 caracteres: ")
 
     #Si el usuario no esta en el archivo de texto, se le pediran sus datos basicos
     if verificar_username(user):
-        print("\nBienvenido de vuelta! A continuacion se muestran sus datos registrados:\n") 
+        print("\nBienvenido de vuelta! A continuación se muestran sus datos registrados:\n") 
         return buscar(user)
         
     else:
@@ -87,13 +96,14 @@ no puede tener más de 30 caracteres: ")
 
         edad = pedir_entero_positivo_validado("Ingrese su edad: ")
         while edad > 100 or edad < 5:
-            edad = pedir_entero_positivo_validado("Ingrese su edad: ")
-        genero = input("Ingrese su genero ('M' es masculino y 'F' es fememino): ")
+            edad = pedir_entero_positivo_validado("Ingrese su edad. Debe estar comprendida entre 5 y 100 años: ")
+        genero = input("Ingrese su género ('M' es masculino y 'F' es fememino): ")
         while genero.upper() != "M" and genero.upper() != "F":
-            genero = input("Ingrese su genero: ")
+            genero = input("Ingrese su género ('M' es masculino y 'F' es fememino): ")
 
         usuario = Usuario(user, nombre.title(), edad, genero.upper())
 
+        #En caso de que el archivo de texto no exista, se crea
         with open("BaseDeDatosUsuarios.txt", "a+") as archivo_usuarios:
             archivo_usuarios.write("{},{},{},{},{},{},{}\n".format(usuario.username, usuario.nombre, usuario.edad, usuario.genero, usuario.puntos_totales, usuario.disparos, usuario.partidas))
 
@@ -102,21 +112,23 @@ no puede tener más de 30 caracteres: ")
 
 def actualizar(username):
     '''
-    Funcion para actualizar los datos de un usuario registrado en el archivo de texto.
+    Función para actualizar los datos de un usuario registrado en la base de datos de usuarios.
 
-    Toma como argumento el nombre de usuario.
+    Toma como argumento el nombre de usuario y retorna el usuario como objeto.
     '''
-    print(Fore.MAGENTA + Style.NORMAL + "Que dato desea modificar?")
+    print("A continuación se muestran sus datos registrados:\n\n", buscar(username))
+
+    print(Fore.MAGENTA + Style.NORMAL + "Qué dato desea modificar?")
     print('''
     1. Nombre de usuario
     2. Nombre completo
     3. Edad
-    4. Genero
+    4. Género
     ''')
 
-    dato = pedir_entero_positivo_validado("Ingrese el numero de la opcion que desea modificar: ")
+    dato = pedir_entero_positivo_validado("Ingrese el número de la opción que desea modificar: ")
     while dato < 1 or dato > 4:
-        dato = pedir_entero_positivo_validado("Ingrese el numero de la opcion que desea modificar: ")
+        dato = pedir_entero_positivo_validado("Ingrese el número de la opción que desea modificar: ")
     
     with open("BaseDeDatosUsuarios.txt", "r") as archivo_usuarios:
         datos_usuarios = archivo_usuarios.readlines()
@@ -128,13 +140,12 @@ def actualizar(username):
             if dato == 1:
                 nuevo_valor = input("Ingrese el nuevo nombre de usuario: ")
 
-                while tiene_espacios(nuevo_valor) or nuevo_valor != nuevo_valor.lower() or len(nuevo_valor) >= 30:
+                while tiene_espacios(nuevo_valor) or nuevo_valor != nuevo_valor.lower() or len(nuevo_valor) >= 30 or verificar_username(nuevo_valor):
                     nuevo_valor = input("Ingrese el nuevo nombre de usuario. Solo puede utilizar letras minúsculas, \
-no puede contener espacios y no puede tener más de 30 caracteres: ")
+no puede contener espacios y no puede tener más de 30 caracteres. Además, debe ser diferente a los ya registrados en el juego: ")
                 
                 username = nuevo_valor
             elif dato == 2:
-                print("escogi", dato)
                 nuevo_valor = input("Ingrese su nombre completo: ")
                 while not validar_nombre(nuevo_valor):
                     nuevo_valor = input("Ingrese su nombre completo. Solo puede contener letras y espacios: ")
@@ -143,12 +154,12 @@ no puede contener espacios y no puede tener más de 30 caracteres: ")
             elif dato == 3:
                 nuevo_valor = pedir_entero_positivo_validado("Ingrese su edad: ")
                 while nuevo_valor > 100 or nuevo_valor < 5:
-                    nuevo_valor = pedir_entero_positivo_validado("Ingrese su edad: ")
+                    nuevo_valor = pedir_entero_positivo_validado("Ingrese su edad. Debe estar comprendida entre 5 y 100 años: ")
 
             elif dato == 4:
-                nuevo_valor = input("Ingrese su genero ('M' es masculino y 'F' es fememino): ")
+                nuevo_valor = input("Ingrese su género ('M' es masculino y 'F' es fememino): ")
                 while nuevo_valor.upper() != "M" and nuevo_valor.upper() != "F":
-                    nuevo_valor = input("Ingrese su genero: ")
+                    nuevo_valor = input("Ingrese su género ('M' es masculino y 'F' es fememino): ")
 
                 nuevo_valor = nuevo_valor.upper()
             
@@ -168,10 +179,10 @@ no puede contener espacios y no puede tener más de 30 caracteres: ")
 
 def control_usuarios(quiere_actualizar, username=""):
     '''
-    Se encarga del registro y actualizacion de datos de los usuarios. 
+    Función que se encarga del registro y actualización de datos de los usuarios. 
     
     Si el argumento se traduce como verdadero se realiza una actualizacion de datos,
-    de lo contrario se realiza el ingreso del usuario. 
+    de lo contrario se realiza el ingreso del usuario. En ambos casos retorna el usuario como objeto.
     '''
 
     if quiere_actualizar:
@@ -179,6 +190,3 @@ def control_usuarios(quiere_actualizar, username=""):
     else:
         print("\nBienvenido al sistema de registro de usuarios de Batalla Naval.\n")
         return registrar()
-
-
-    

@@ -1,0 +1,20 @@
+oriana_gonzlez,Oriana Gonzalez,18,F,236,99,3
+luisstanislao,Luis Stanislao,19,M,10,84,1
+ariadnigonzalez,Ariadni Gonzalez,24,F,0,0,0
+andrespereda,Andres Pereda,10,M,30,100,3
+elenavalero,Elena Valero,30,F,180,18,2
+emiliopardo,Emilio Pardo,22,M,48,250,3
+paulatorres,Paula Torres,70,F,10,100,1
+raulalarcon,Raul Alarcon,23,M,200,450,6
+mercedesgarrido,Mercedes Garrido,15,F,300,500,8
+jorgecuenca,Jorge Cuenca,30,M,26,140,2
+mariajosefapicazo,Maria Josefa Picazo,50,F,20,200,2
+diegoblazquez,Diego Blazquez,24,M,40,50,1
+antoniomoreno,Antonio Moreno,100,M,0,0,0
+mariadoloresdiaz,Maria Dolores Diaz,18,F,160,280,4
+davidgarcia,David Garcia,5,M,100,160,3
+pilarsaez,Pilar Saez,99,F,10,88,1
+juanjosenavarro,Juan Jose Navarro,40,M,100,1000,10
+mariaangelesrubio,Maria Angeles Rubio,21,F,90,400,6
+pabloruiz,Pablo Ruiz,27,M,66,190,3
+laurasanchez,Laura Sanchez,8,F,90,9,1

@@ -4,7 +4,9 @@ init(autoreset=True)
 
 def top10():
     '''
-    Funcion que elabora el top 10.
+    Función que lee la base de datos de los usuarios y elabora e imprime una lista de los 10 usuarios registrados con mayor puntuación total.
+
+    Dicha lista se encuentra ordenada y la primera posición es ocupada por aquel usuario con la mayor puntuación total. 
     '''
     lista_top10 = []
 
@@ -34,13 +36,18 @@ def top10():
             print("\t" + usuario[0] + "/" + usuario[4] + "/" + usuario[5] + "\n")
         else:
             break
-    print(Style.DIM + "*Se muestra: nombre_de_usuario\puntuacion_total\disparos_realizados")
-
-
+    print("*Se muestra: nombre_de_usuario\puntuacion_total_acumulada\disparos_realizados")
 
 def calculo_estadisticas():
+    '''
+    Función que lee la base de datos de los usuarios y calcula e imprime lo siguiente:
+    - Rangos de edad ordenados según número de usuarios.
+    - Cantidad total de puntos en partidas por género (femenino y masculino).
+    - Promedio de disparos hechos para ganar.
+    '''
 
-    rangos = [{"min": 5, "max": 18, "usuarios": 0},{"min": 19, "max": 45, "usuarios": 0},{"min": 46, "max": 60, "usuarios": 0},{"min": 61, "max": 100, "usuarios": 0}]
+    #En cada rango se encuentra: [edad_minima, edad_maxima, usuarios_pertenecientes]
+    rangos = [[5, 18, 0], [19, 45, 0], [46, 60, 0], [61, 100, 0]]
     puntos_femenino = 0
     puntos_masculino = 0
     disparos_totales = 0
@@ -61,20 +68,11 @@ def calculo_estadisticas():
         partidas += int(user[6])
 
         for rango in rangos:
-            if rango["min"] <= int(user[2]) and rango["max"] >= int(user[2]):
-                rango["usuarios"] += 1
+            if rango[0] <= int(user[2]) and rango[1] >= int(user[2]):
+                rango[2] += 1
 
-    mas_usuarios = []
-
-    for i, rango in enumerate(rangos):
-        if mas_usuarios == []:
-            mas_usuarios.append(i)
-        elif rango["usuarios"] > rangos[mas_usuarios[0]]["usuarios"]:
-            mas_usuarios[0] = i
-        elif rango["usuarios"] == rangos[mas_usuarios[0]]["usuarios"]:
-            mas_usuarios.append(i)
-
-    promedio_disparos = disparos_totales / partidas
+    
+    rangos.sort(key= lambda rango: rango[2], reverse=True)
 
     print(Fore.CYAN + Style.BRIGHT + "\n \n" + '''
 ███████╗███████╗████████╗ █████╗ ██████╗ ██╗███████╗████████╗██╗ ██████╗ █████╗ ███████╗
@@ -86,22 +84,17 @@ def calculo_estadisticas():
     
     ''')
          
-    print(Fore.MAGENTA + Style.NORMAL + "• Rango(s) de edad con mas jugadores: ", end="")
+    print(Fore.MAGENTA + Style.NORMAL + "• Rangos de edad ordenados según número de jugadores: \n")
 
-    for indice in mas_usuarios:
-        if indice != mas_usuarios[-1]:
-            print("{} y {} anos". format(rangos[indice]["min"], rangos[indice]["max"]), end=", ")
-        else:
-            print("{} y {} anos". format(rangos[indice]["min"], rangos[indice]["max"]), end=".\n \n")
+    for rango in rangos:
+        print("\t- Entre {} y {} años: {} jugador(es)".format(rango[0], rango[1], rango[2]))
 
+    print(Fore.MAGENTA + Style.NORMAL + "\n• Cantidad total de puntos de género femenino:", puntos_femenino, "\n")
     
-    print(Fore.MAGENTA + Style.NORMAL + "• Cantidad total de puntos de genero femenino:", puntos_femenino, "\n")
-    
-    print(Fore.MAGENTA + Style.NORMAL + "• Cantidad total de puntos de genero masculino:", puntos_masculino, "\n")
+    print(Fore.MAGENTA + Style.NORMAL + "• Cantidad total de puntos de género masculino:", puntos_masculino, "\n")
 
     if partidas != 0:
+        promedio_disparos = disparos_totales / partidas
         print(Fore.MAGENTA + Style.NORMAL + "• Promedio de disparos realizados para ganar:", round(promedio_disparos, 2), "\n")
     else:
-        print(Fore.MAGENTA + Style.NORMAL + "• Promedio de disparos realizados para ganar:", "0") #probar
-
-    
+        print(Fore.MAGENTA + Style.NORMAL + "• Promedio de disparos realizados para ganar:", "0")
